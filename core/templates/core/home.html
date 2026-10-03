@@ -1,0 +1,8 @@
+{% extends "core/base.html" %}{% block content %}
+<section class="hero"><h1>Discover your next adventure</h1><p>Plan. Explore. Travel with us.</p>
+<form action="{% url 'packages' %}" style="display:flex;gap:.5rem"><input name="q" placeholder="Where do you want to go?" aria-label="Search destinations"><button class="btn alt" style="min-width:100px">Search</button></form></section>
+<div class="grid"><div class="card"><div class="b"><h3>Best packages</h3></div></div><div class="card"><div class="b"><h3>Safe travel</h3></div></div><div class="card"><div class="b"><h3>24/7 support</h3></div></div><div class="card"><div class="b"><h3>Affordable prices</h3></div></div></div>
+<h2>Popular destinations</h2><div class="grid">{% for d in dests %}<div class="card">{% if d.image %}<img src="{{ d.image.url }}" alt="">{% else %}<div class="ph"></div>{% endif %}<div class="b"><h3>{{ d.name }}</h3></div></div>{% empty %}<p>Add popular destinations from the admin pages.</p>{% endfor %}</div>
+<h2>Tour packages</h2>{% include "core/_cards.html" with items=packages kind="package" %}
+<h2>Vehicles</h2>{% include "core/_cards.html" with items=vehicles kind="vehicle" %}
+<h2>Hotels</h2>{% include "core/_cards.html" with items=hotels kind="hotel" %}{% endblock %}

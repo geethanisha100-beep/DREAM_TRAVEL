@@ -1,0 +1,6 @@
+{% extends "core/base.html" %}{% block content %}<h1>Bookings</h1>{% include "core/_manage_nav.html" %}
+<p>Filter: <a href="?status=Pending">Pending</a> | <a href="?status=Confirmed">Confirmed</a> | <a href="?kind=package">Packages</a> | <a href="?kind=vehicle">Vehicles</a> | <a href="?kind=hotel">Hotels</a> | <a href="{% url 'manage_bookings' %}">All</a></p>
+<table><tr><th>#</th><th>Item</th><th>Customer</th><th>Total</th><th>Paid</th><th>Status</th><th>Contact</th></tr>
+{% for b in bookings %}<tr><td>{{ b.id }}</td><td>{{ b.item_name }}<br>× {{ b.members }}</td><td>{{ b.name }}<br>{{ b.message }}</td><td>₹{{ b.total }}</td><td>{% if b.payment %}Yes{% else %}No{% endif %}</td>
+<td><form method="post" action="{% url 'manage_booking_status' b.pk %}">{% csrf_token %}<select name="status" onchange="this.form.submit()"><option {% if b.status == "Pending" %}selected{% endif %}>Pending</option><option {% if b.status == "Confirmed" %}selected{% endif %}>Confirmed</option><option {% if b.status == "Cancelled" %}selected{% endif %}>Cancelled</option></select></form></td>
+<td><a href="mailto:{{ b.user.email }}">Email</a> · {{ b.contact }}</td></tr>{% empty %}<tr><td colspan="7">No bookings found.</td></tr>{% endfor %}</table>{% endblock %}

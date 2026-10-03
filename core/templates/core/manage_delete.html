@@ -1,0 +1,2 @@
+{% extends "core/base.html" %}{% block content %}<div class="box"><h1>Delete {{ obj }}?</h1><p>This also removes related wishlist entries and reviews. It cannot be undone.</p>
+<form method="post">{% csrf_token %}<button class="btn" type="submit">Delete</button> <a class="btn alt" href="{% url 'manage_items' kind %}">Cancel</a></form></div>{% endblock %}

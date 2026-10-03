@@ -1,0 +1,7 @@
+{% extends "core/base.html" %}{% block content %}<div class="box"><h1>Booking confirmed</h1><p>Thank you for choosing TravelGo.</p>
+<table><tr><td>Booking ID</td><td>{{ b.ref }}</td></tr><tr><td>Package</td><td>{{ b.item_name }}</td></tr>
+{% if b.travel_date %}<tr><td>Travel date</td><td>{{ b.travel_date }}</td></tr>{% endif %}
+<tr><td>Travelers</td><td>{{ b.adults }} adults, {{ b.children }} children</td></tr>
+{% if b.vehicle %}<tr><td>Vehicle</td><td>{{ b.vehicle }}</td></tr>{% endif %}{% if b.hotel %}<tr><td>Hotel</td><td>{{ b.hotel }}{% if b.room %} ({{ b.room.name }}){% endif %}</td></tr><tr><td>Nights</td><td>{{ b.nights }}</td></tr>{% endif %}
+<tr><td>Total</td><td>₹{{ b.total }}</td></tr><tr><td>Status</td><td>{{ b.status }}</td></tr><tr><td>Transaction</td><td>{{ b.payment.txn_id }} via {{ b.payment.method }}</td></tr></table><p>
+<a class="btn" href="{% url 'receipt' b.pk %}">Download ticket (PDF)</a> <a class="btn alt" href="{% url 'home' %}">Back to home</a></p></div>{% endblock %}

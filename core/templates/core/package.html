@@ -1,0 +1,7 @@
+{% extends "core/base.html" %}{% block content %}
+{% if p.images %}<div class="slider">{% for im in p.images %}<img src="{{ im.url }}" alt="{{ p.title }}">{% endfor %}</div>{% endif %}
+<h1>{{ p.title }}</h1><p>{{ p.destination }} · {{ p.duration }} · starts {{ p.start_date }}</p><p>{{ p.description }}</p>
+<p class="price">₹{{ p.amount }} per member · {{ p.seats }} seats left</p>
+<a class="btn" href="{% url 'trip' p.pk %}">Book now</a>
+<a class="btn alt" href="{% url 'wishlist' p.pk %}">{% if saved %}Remove from wishlist{% else %}Save to wishlist{% endif %}</a>
+<h2>Reviews</h2>{% for r in reviews %}<p><b>{{ r.rating }}/5</b> {{ r.comment }}</p>{% empty %}<p>No reviews yet.</p>{% endfor %}{% endblock %}

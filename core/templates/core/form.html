@@ -1,0 +1,4 @@
+{% extends "core/base.html" %}{% block content %}<div class="box"><h1>{{ title|default:"Reset your password" }}</h1>
+<form method="post"{% if multipart %} enctype="multipart/form-data"{% endif %}>{% csrf_token %}{{ form.as_p }}
+<button class="btn" type="submit">{{ button|default:"Continue" }}</button></form>
+{% if forgot %}<p>Or continue with <a class="btn alt" href="#">Google</a> <a class="btn alt" href="#">Facebook</a></p><p><a href="{% url 'password_reset' %}">Forgot password?</a> · <a href="{% url 'register' %}">Create an account</a></p>{% endif %}</div>{% endblock %}

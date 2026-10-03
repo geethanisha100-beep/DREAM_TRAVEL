@@ -1,0 +1,4 @@
+{% extends "core/base.html" %}{% block content %}<h1>Manage {{ kind }}</h1>{% include "core/_manage_nav.html" %}
+<p><a class="btn" href="{% url 'manage_add' kind %}">Add new</a></p>
+<table>{% for i in items %}<tr><td>{{ i }}</td><td>{% if i.amount %}₹{{ i.amount }}{% endif %}</td><td>{% if i.available == False %}Unavailable{% endif %}</td>
+<td><a href="{% url 'manage_edit' kind i.pk %}">Edit</a> · <a href="{% url 'manage_delete' kind i.pk %}">Delete</a></td></tr>{% empty %}<tr><td>Nothing added yet.</td></tr>{% endfor %}</table>{% endblock %}

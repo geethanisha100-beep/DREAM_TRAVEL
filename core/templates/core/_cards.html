@@ -1,0 +1,8 @@
+<div class="grid">{% for i in items %}<div class="card">
+{% if kind == "package" %}{% if i.image1 %}<img src="{{ i.image1.url }}" alt="">{% else %}<div class="ph"></div>{% endif %}
+<div class="b"><h3>{{ i.title }}</h3><p>{{ i.destination }} · {{ i.duration }} · {{ i.rating }} stars</p><p class="price">₹{{ i.amount }} per member</p><p>{{ i.seats }} seats left</p><a class="btn" href="{% url 'package_detail' i.pk %}">View details</a></div>
+{% elif kind == "vehicle" %}{% if i.photo %}<img src="{{ i.photo.url }}" alt="">{% else %}<div class="ph"></div>{% endif %}
+<div class="b"><h3>{{ i.name }}</h3><p>{{ i.model_name }} · {{ i.get_vehicle_type_display }} · {{ i.count }} available · {% if i.driver_included %}Driver{% else %}Self-drive{% endif %}</p><p class="price">₹{{ i.amount }} per day</p><a class="btn" href="{% url 'book' 'vehicle' i.pk %}">Select</a></div>
+{% else %}{% if i.photo %}<img src="{{ i.photo.url }}" alt="">{% else %}<div class="ph"></div>{% endif %}
+<div class="b"><h3>{{ i.name }}</h3><p>{{ i.location }} · {{ i.room_type }} · Rated {{ i.rating }}</p><p>{{ i.food_details }}</p>{% for r in i.roomtype_set.all %}<p>{{ r.name }}: ₹{{ r.price }}/night</p>{% endfor %}<p class="price">₹{{ i.amount }} per day</p><a class="btn" href="{% url 'book' 'hotel' i.pk %}">Book room</a></div>{% endif %}
+</div>{% empty %}<p>Nothing available right now. Check back soon.</p>{% endfor %}</div>

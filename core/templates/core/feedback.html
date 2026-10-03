@@ -1,0 +1,3 @@
+{% extends "core/base.html" %}{% block content %}<h1>Your feedback matters</h1>
+<div class="side"><section><div class="box"><form method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<button class="btn" type="submit">Submit feedback</button></form></div></section>
+<section><h2>Customer reviews</h2>{% for r in reviews %}<div class="card"><div class="b"><b>{{ r.user.first_name|default:r.user.email }}</b> · {{ r.rating }}/5 · {{ r.package.title }}<p>{{ r.comment }}</p>{% if r.photo %}<img src="{{ r.photo.url }}" alt="" style="height:90px;width:auto">{% endif %}</div></div>{% empty %}<p>No reviews yet. Be the first.</p>{% endfor %}</section></div>{% endblock %}

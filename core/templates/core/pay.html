@@ -1,0 +1,3 @@
+{% extends "core/base.html" %}{% block content %}<div class="box"><h1>Payment</h1>
+<p>{{ b.item_name }} × {{ b.members }}</p><h2>Total: ₹{{ b.total }}</h2>
+<form method="post">{% csrf_token %}{{ form.as_p }}<button class="btn" type="submit">Pay ₹{{ b.total }}</button></form></div>{% endblock %}

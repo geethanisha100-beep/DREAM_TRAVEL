@@ -1,0 +1,6 @@
+{% extends "core/base.html" %}{% block content %}<h1>Admin dashboard</h1>{% include "core/_manage_nav.html" %}
+<div class="grid">{% for label, k, n in counts %}<div class="card"><div class="b"><h3>{{ label }}</h3><p class="price">{{ n }}</p><a class="btn" href="{% url 'manage_add' k %}">Add new</a></div></div>{% endfor %}
+<div class="card"><div class="b"><h3>Bookings</h3><p class="price">{{ bookings }}</p><p>{{ pending }} pending</p></div></div>
+<div class="card"><div class="b"><h3>Customers</h3><p class="price">{{ customers }}</p></div></div><div class="card"><div class="b"><h3>Destinations</h3><p class="price">{{ dests }}</p></div></div><div class="card"><div class="b"><h3>Payments</h3><p class="price">{{ payments }}</p></div></div></div>
+<h2>Recent bookings</h2><table><tr><th>#</th><th>Item</th><th>Customer</th><th>Total</th><th>Status</th></tr>
+{% for b in recent %}<tr><td>{{ b.id }}</td><td>{{ b.item_name }}</td><td>{{ b.name }}</td><td>₹{{ b.total }}</td><td>{{ b.status }}</td></tr>{% empty %}<tr><td colspan="5">No bookings yet.</td></tr>{% endfor %}</table>{% endblock %}

@@ -1,0 +1,36 @@
+from django.contrib.auth import views as auth
+from django.urls import path
+from . import views as v
+from . import manage as m
+urlpatterns = [
+    path("", v.home, name="home"),
+    path("about/", v.about, name="about"),
+    path("register/", v.register, name="register"),
+    path("login/", v.login_view, name="login"),
+    path("logout/", auth.LogoutView.as_view(next_page="login"), name="logout"),
+    path("forgot-password/", auth.PasswordResetView.as_view(template_name="core/form.html", success_url="/login/"), name="password_reset"),
+    path("reset/<uidb64>/<token>/", auth.PasswordResetConfirmView.as_view(template_name="core/form.html", success_url="/login/"), name="password_reset_confirm"),
+    path("packages/", v.listing, {"kind": "package"}, name="packages"),
+    path("vehicles/", v.listing, {"kind": "vehicle"}, name="vehicles"),
+    path("hotels/", v.listing, {"kind": "hotel"}, name="hotels"),
+    path("destinations/", v.destinations, name="destinations"),
+    path("package/<int:pk>/", v.package_detail, name="package_detail"),
+    path("wishlist/<int:pk>/", v.toggle_wishlist, name="wishlist"),
+    path("trip/<int:pk>/", v.trip_book, name="trip"),
+    path("feedback/", v.feedback, name="feedback"),
+    path("book/<str:kind>/<int:pk>/", v.book, name="book"),
+    path("pay/<int:pk>/", v.pay, name="pay"),
+    path("receipt/<int:pk>/", v.receipt_pdf, name="receipt"),
+    path("dashboard/", v.dashboard, name="dashboard"),
+    path("dashboard/profile/", v.edit_profile, name="profile"),
+    path("manage/", m.dashboard, name="manage"),
+    path("manage/profile/", m.admin_profile, name="manage_profile"),
+    path("manage/bookings/", m.bookings, name="manage_bookings"),
+    path("manage/bookings/<int:pk>/status/", m.booking_status, name="manage_booking_status"),
+    path("manage/payments/", m.payments, name="manage_payments"),
+    path("manage/customers/", m.customers, name="manage_customers"),
+    path("manage/<str:kind>/", m.items, name="manage_items"),
+    path("manage/<str:kind>/add/", m.edit_item, name="manage_add"),
+    path("manage/<str:kind>/<int:pk>/edit/", m.edit_item, name="manage_edit"),
+    path("manage/<str:kind>/<int:pk>/delete/", m.delete_item, name="manage_delete"),
+]

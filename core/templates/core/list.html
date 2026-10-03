@@ -1,0 +1,6 @@
+{% extends "core/base.html" %}{% block content %}
+<h1>{% if kind == "package" %}Tour packages{% elif kind == "vehicle" %}Choose your preferred vehicle{% else %}Choose your hotel{% endif %}</h1>
+{% if kind == "package" %}<p><a class="chip" href="{% url 'packages' %}">All</a>{% for k, l in cats %}<a class="chip" href="?cat={{ k }}">{{ l }}</a>{% endfor %}</p>
+<form><input name="q" placeholder="Search packages" value="{{ request.GET.q }}"></form>{% endif %}
+{% if kind == "vehicle" %}<p><a class="chip" href="{% url 'vehicles' %}">All</a>{% for k, l in vtypes %}<a class="chip" href="?type={{ k }}">{{ l }}</a>{% endfor %}</p>{% endif %}
+{% include "core/_cards.html" with items=items kind=kind %}{% endblock %}

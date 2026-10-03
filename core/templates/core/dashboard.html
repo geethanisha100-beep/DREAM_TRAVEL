@@ -1,0 +1,7 @@
+{% extends "core/base.html" %}{% block content %}<div class="side"><nav style="padding:1rem"><b style="color:#fff">{{ user.first_name|default:user.email }}</b>
+<a href="?tab=bookings">My bookings</a><a href="{% url 'profile' %}">My profile</a><a href="?tab=wishlist">Wishlist</a><a href="?tab=reviews">My reviews</a><a href="{% url 'logout' %}" onclick="event.preventDefault();document.getElementById('lo').submit()">Logout</a></nav>
+<section>{% if tab == "wishlist" %}<h2>Wishlist</h2>{% for w in wishlist %}<p><a href="{% url 'package_detail' w.package.pk %}">{{ w.package }}</a></p>{% empty %}<p>No saved packages yet.</p>{% endfor %}
+{% elif tab == "reviews" %}<h2>My reviews</h2>{% for r in reviews %}<p><b>{{ r.rating }}/5</b> {{ r.package }}: {{ r.comment }}</p>{% empty %}<p>No reviews yet. <a href="{% url 'feedback' %}">Write one</a>.</p>{% endfor %}
+{% else %}<h2>My bookings</h2><table><tr><th>ID</th><th>Item</th><th>Total</th><th>Status</th></tr>
+{% for b in bookings %}<tr><td>{{ b.pk }}</td><td>{{ b.item_name }}</td><td>₹{{ b.total }}</td><td>{% if b.status == "Pending" %}<a href="{% url 'pay' b.pk %}">Pay now</a>{% else %}{{ b.status }} · <a href="{% url 'receipt' b.pk %}">PDF</a>{% endif %}</td></tr>{% empty %}<tr><td colspan="4">No bookings yet.</td></tr>{% endfor %}</table>
+<h2>Payment history</h2><table>{% for p in payments %}<tr><td>{{ p.txn_id }}</td><td>₹{{ p.amount }}</td><td>{{ p.method }}</td><td>{{ p.paid_at|date:"d M Y" }}</td></tr>{% empty %}<tr><td>No payments yet.</td></tr>{% endfor %}</table>{% endif %}</section></div>{% endblock %}

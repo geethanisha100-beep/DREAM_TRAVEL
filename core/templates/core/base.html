@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TravelGo</title>
+<style>
+:root{--sea:#0E3A5F;--aqua:#0E9AA7;--sun:#7FE3EA;--mist:#F4F8FA;--ink:#17252F}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 "Trebuchet MS",Verdana,sans-serif;color:var(--ink);background:var(--mist)}
+h1,h2,h3{font-family:Georgia,serif;color:var(--sea);line-height:1.2}a{color:var(--sea)}
+nav{background:var(--sea);padding:.8rem 1.2rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+nav a{color:#fff;text-decoration:none}nav .brand{font:700 1.3rem Georgia,serif;color:var(--sun);margin-right:auto}
+nav a:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+main{max-width:1000px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.hero{background:linear-gradient(120deg,var(--sea),var(--aqua));color:#fff;padding:3rem 1.5rem;border-radius:10px;margin-bottom:2rem}
+.hero h1{color:#fff;font-size:2.4rem;margin:0 0 .5rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
+.card{background:#fff;border:1px solid #d5e2e8;border-radius:8px;overflow:hidden}.card .b{padding:1rem}
+.card img,.ph{width:100%;height:160px;object-fit:cover;display:block;background:#cfe6ea}
+.price{font-weight:700;color:var(--aqua)}
+.btn{display:inline-block;background:var(--aqua);color:#fff;border:0;padding:.6rem 1.1rem;border-radius:6px;font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
+.btn.alt{background:var(--sea);color:#fff}.chip{display:inline-block;padding:.25rem .8rem;border-radius:20px;background:#fff;border:1px solid #9bb5c0;text-decoration:none;margin:0 .2rem .4rem 0;font-size:.9rem}.chip.on{background:var(--aqua);color:#fff;border-color:var(--aqua)}.mnav{background:#10202d;padding:.6rem;border-radius:8px}.mnav .btn{background:transparent;border:1px solid #2d4658}.side{display:flex;gap:1.2rem;flex-wrap:wrap}.side nav{flex:0 0 180px;display:block;background:var(--sea);border-radius:8px}.side nav a{display:block;padding:.4rem 0}.side section{flex:1;min-width:260px}
+form p{margin:.8rem 0}label{display:block;font-weight:700}input,select,textarea{width:100%;padding:.55rem;border:1px solid #9bb5c0;border-radius:6px;font:inherit}
+.box{background:#fff;padding:1.5rem;border-radius:8px;max-width:480px;border:1px solid #d5e2e8}
+.msg{background:#e3f6f1;border-left:4px solid var(--aqua);padding:.6rem 1rem;margin-bottom:1rem}.errorlist{color:#b3261e;padding-left:1rem}
+table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:.5rem;border-bottom:1px solid #e1ebef;text-align:left}
+.slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:.5rem}.slider img{flex:0 0 100%;scroll-snap-align:center;height:300px;object-fit:cover;border-radius:8px}
+</style></head><body>
+<nav><a class="brand" href="{% url 'home' %}">TravelGo</a>
+<a href="{% url 'destinations' %}">Destinations</a><a href="{% url 'packages' %}">Tour packages</a><a href="{% url 'vehicles' %}">Vehicles</a><a href="{% url 'hotels' %}">Hotels</a><a href="{% url 'about' %}">About</a><a href="{% url 'feedback' %}">Feedback</a>
+{% if user.is_authenticated %}{% if user.is_staff %}<a href="{% url 'manage' %}">Admin</a>{% endif %}<a href="{% url 'dashboard' %}">My dashboard</a><a href="{% url 'logout' %}" onclick="event.preventDefault();document.getElementById('lo').submit()">Log out</a>
+<form id="lo" method="post" action="{% url 'logout' %}" hidden>{% csrf_token %}</form>
+{% else %}<a href="{% url 'login' %}">Log in</a><a href="{% url 'register' %}">Register</a>{% endif %}</nav>
+<main>{% for m in messages %}<div class="msg">{{ m }}</div>{% endfor %}{% block content %}{% endblock %}</main></body></html>
